@@ -1,0 +1,48 @@
+﻿Study Static Analysis:1 started: 2022-05-10, 3:28:00 PM
+Number of configurations: 1
+Default mesh: 8890 elements, 17545 nodes
+A model separates into 3 independent components
+Soft spring was added
+Solution time 177s
+Convergence rate: 50%
+Reached the total number of h refinements 
+Study        Worst Jacobian ratio :  1  on element 1 finished: 2022-05-10, 3:31:03 PM
+Total time 0:03:03
+
+Study Static Analysis:1 started: 2022-05-10, 3:31:45 PM
+Number of configurations: 1
+Default mesh: 8890 elements, 17545 nodes
+A model separates into 3 independent components
+Solution time 67.7s
+Convergence rate: 50%
+Reached the total number of h refinements 
+Study Static Analysis:1 finished: 2022-05-10, 3:32:54 PM
+Total time 0:01:09
+
+Study Static Analysis:1 started: 2022-05-10, 4:16:58 PM
+Number of configurations: 1
+Default mesh: 8890 elements, 17545 nodes
+Solution time 144s
+Convergence rate: 50%
+Reached the total number of h refinements 
+Study        Worst Jacobian ratio :  1  on element 1 finished: 2022-05-10, 4:19:28 PM
+Total time 0:02:30
+
+Study Static Analysis:2 started: 2022-05-10, 4:23:31 PM
+Number of configurations: 1
+Default mesh: 8890 elements, 17545 nodes
+Solution time 5.4s
+Convergence rate: 50%
+Reached the total number of h refinements 
+Study        Worst Jacobian ratio :  1  on element 1 finished: 2022-05-10, 4:23:43 PM
+Total time 0:00:12
+
+Study Bend test started: 2022-05-10, 4:28:16 PM
+Number of configurations: 1
+Default mesh: 8890 elements, 17545 nodes
+Solution time 2.8s
+Convergence rate: 50%
+Reached the total number of h refinements 
+Study Bend test finished: 2022-05-10, 4:28:21 PM
+Total time 0:00:05
+
