@@ -1,0 +1,36 @@
+﻿Study Bend Test started: 5/15/2022, 1:02:45 AM
+Number of configurations: 1
+Default mesh: 2611 elements, 5131 nodes
+Solution time 1.5s
+Convergence rate: 5.19%
+Problem converged 
+Study        Worst Jacobian ratio :  2.44  on element 342 finished: 5/15/2022, 1:02:48 AM
+Total time 0:00:03
+
+Study Bend Test 2 started: 5/15/2022, 1:04:37 AM
+Number of configurations: 1
+Default mesh: 2611 elements, 5131 nodes
+Solution time 1.2s
+Convergence rate: 28.1%
+Reached the total number of h refinements 
+Study Bend Test 2 finished: 5/15/2022, 1:04:39 AM
+Total time 0:00:02
+
+Study Bend Test 2 started: 5/15/2022, 1:05:33 AM
+Number of configurations: 1
+Default mesh: 2611 elements, 5131 nodes
+Solution time 0.8s
+Convergence rate: 21.9%
+Reached the total number of h refinements 
+Study Bend Test 2 finished: 5/15/2022, 1:05:34 AM
+Total time 0:00:01
+
+Study Torsion Test started: 5/15/2022, 1:07:30 AM
+Number of configurations: 1
+Default mesh: 2611 elements, 5131 nodes
+Solution time 2s
+Convergence rate: 58.1%
+Reached the total number of h refinements 
+Study Torsion Test finished: 5/15/2022, 1:07:33 AM
+Total time 0:00:02
+
