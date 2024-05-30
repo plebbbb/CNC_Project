@@ -1,0 +1,22 @@
+Installation Instructions:
+
+Ensure the following packages are installed:
+libmodbus-dev
+linuxcnc-dev
+
+Usually to install these packages, you type:
+sudo apt-get install limodbus-dev
+sudo apt-get install linuxcnc-dev
+
+To Install:
+type:
+sudo make install
+
+To run it:
+type: 
+halrun
+loadusr -Wn vfd3 nfx9000rtu --bits 8 --device /dev/ttyS0 --parity none --rate 9600 --stopbits 2 --target 3 -n vfd3
+show pin
+
+
+Ensure that the VFD is set to 8,n,2 RTU mode, slave id is set to 3, baudrate 9600! 
