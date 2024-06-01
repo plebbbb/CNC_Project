@@ -3,8 +3,9 @@ from pymodbus.client import AsyncModbusSerialClient
 import asyncio
 from enum import IntEnum
 import hal
+import time
 
-
+#Note only this file is correctly updated
 
 vfd_9600 = AsyncModbusSerialClient(
     port = "/dev/ttyS0", 
@@ -70,6 +71,16 @@ async def readcurrent():
 async def readpower():
     power_hW = await read_reg(0x7005) 
     return power_hW*100
+
+async def readfault():
+    fault = await read_reg(0x703E) 
+    return fault
+
+#output voltage is in units of 1v
+async def readvoltage():
+    voltage_V = await read_reg(0x7003) 
+    return voltage_V
+
 #output current is in units of 0.01hz
 #first is rpm, second is hz
 async def readspeed():
@@ -77,17 +88,21 @@ async def readspeed():
     return [speed_chz * 60 / 100, speed_chz/100]
 
 
-h = hal.component("vfd")
+h = hal.component("vfd_driver")
 h.newpin("cmd_speed_hz", hal.HAL_FLOAT, hal.HAL_IN)
 h.newpin("at_target_speed", hal.HAL_BIT, hal.HAL_OUT)
 h.newpin("enable", hal.HAL_BIT, hal.HAL_IN)
-h.newpin("actual_speed_hz_abs", hal.HAL_FLOAT, hal.HAL_IN)
-h.newpin("actual_speed_rpm_abs", hal.HAL_FLOAT, hal.HAL_IN)
+h.newpin("actual_speed_hz_abs", hal.HAL_FLOAT, hal.HAL_OUT)
+h.newpin("actual_speed_rpm_abs", hal.HAL_FLOAT, hal.HAL_OUT)
+h.newpin("error_count", hal.HAL_S32, hal.HAL_OUT)
+h.newpin("fault_code", hal.HAL_S32, hal.HAL_OUT)
 
 h.newpin("output_power_w", hal.HAL_FLOAT, hal.HAL_OUT)
+h.newpin("output_voltage_v", hal.HAL_FLOAT, hal.HAL_OUT)
 h.newpin("output_current_a", hal.HAL_FLOAT, hal.HAL_OUT)
 h.ready()
 
+time.sleep(10)
 at_speed_threshold = 5
 
 async def run():
@@ -100,12 +115,16 @@ async def run():
                 await setspeed_hz(tgt)
                 h.output_current_a = await readcurrent()
                 h.output_power_w = await readpower()
+                h.output_voltage_v = await readvoltage()
+                h.fault_code = await readfault()
                 tmp = await readspeed()
                 h.actual_speed_rpm_abs = tmp[0]
                 h.actual_speed_hz_abs = tmp[1]
                 h.at_target_speed = ((abs(tgt-tmp[1]) <= at_speed_threshold))
-                await asyncio.sleep(1)
-            except:
+                await asyncio.sleep(2)
+            except Exception as e:
+                print(e)
+                h.error_count+=1
                 pass
     except KeyboardInterrupt:
         await close()
