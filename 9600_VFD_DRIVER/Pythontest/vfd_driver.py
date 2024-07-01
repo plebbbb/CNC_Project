@@ -72,6 +72,13 @@ async def readpower():
     power_hW = await read_reg(0x7005) 
     return power_hW*100
 
+#QTdragon does V*I but result doesnt seem correct
+#so this does V = P/I, so VI = P
+async def readpower_V():
+    power_hW = await read_reg(0x7005) 
+    return (power_hW*100)/h.output_current_a
+
+
 async def readfault():
     fault = await read_reg(0x703E) 
     return fault
@@ -96,6 +103,8 @@ h.newpin("actual_speed_hz_abs", hal.HAL_FLOAT, hal.HAL_OUT)
 h.newpin("actual_speed_rpm_abs", hal.HAL_FLOAT, hal.HAL_OUT)
 h.newpin("error_count", hal.HAL_S32, hal.HAL_OUT)
 h.newpin("fault_code", hal.HAL_S32, hal.HAL_OUT)
+h.newpin("safe", hal.HAL_BIT, hal.HAL_OUT)
+
 
 h.newpin("output_power_w", hal.HAL_FLOAT, hal.HAL_OUT)
 h.newpin("output_voltage_v", hal.HAL_FLOAT, hal.HAL_OUT)
@@ -115,15 +124,20 @@ async def run():
                 await setspeed_hz(tgt)
                 h.output_current_a = await readcurrent()
                 h.output_power_w = await readpower()
-                h.output_voltage_v = await readvoltage()
+                h.output_voltage_v = await readvoltage()#readpower_V()
                 h.fault_code = await readfault()
+                if h.fault_code != 0:
+                    h.safe = 0
+                else :
+                    h.safe = 1
                 tmp = await readspeed()
                 h.actual_speed_rpm_abs = tmp[0]
                 h.actual_speed_hz_abs = tmp[1]
                 h.at_target_speed = ((abs(tgt-tmp[1]) <= at_speed_threshold))
                 await asyncio.sleep(2)
             except Exception as e:
-                print(e)
+                #print(e)
+                h.safe = 0
                 h.error_count+=1
                 pass
     except KeyboardInterrupt:
