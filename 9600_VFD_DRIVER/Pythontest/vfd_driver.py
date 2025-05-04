@@ -135,7 +135,7 @@ async def run():
                 tmp = await readspeed()
                 h.actual_speed_rpm_abs = tmp[0]
                 h.actual_speed_hz_abs = tmp[1]
-                h.at_target_speed = ((abs(tgt-tmp[1]) <= at_speed_threshold))
+                h.at_target_speed = ((abs(tgt-tmp[1]) <= at_speed_threshold) and (tgt != 0))
                 await asyncio.sleep(2)
                 failcount = 0
             except Exception as e:
