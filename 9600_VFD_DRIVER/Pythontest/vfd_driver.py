@@ -114,6 +114,8 @@ h.ready()
 time.sleep(10)
 at_speed_threshold = 5
 
+failcount = 0
+
 async def run():
     await init()
     try:
@@ -135,10 +137,14 @@ async def run():
                 h.actual_speed_hz_abs = tmp[1]
                 h.at_target_speed = ((abs(tgt-tmp[1]) <= at_speed_threshold))
                 await asyncio.sleep(2)
+                failcount = 0
             except Exception as e:
                 #print(e)
-                h.safe = 0
-                h.error_count+=1
+                if failcount > 3:
+                    failcount = 0
+                    h.safe = 0
+                    h.error_count+=1
+                else: failcount += 1
                 pass
     except KeyboardInterrupt:
         await close()

@@ -75,7 +75,7 @@ async def run():
               #  print(temp)*/'''
                 await asyncio.sleep(0.25)
             except Exception as e:
-                print(e)
+                #print(e)
                 pass
     except KeyboardInterrupt:
         await close()
